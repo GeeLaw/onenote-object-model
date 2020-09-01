@@ -256,11 +256,6 @@ COM_DECLARE_INTERFACE(IQuickFilingDialogCallback,
     /* [in] */ IQuickFilingDialog *dialog);
 } IQuickFilingDialogCallback;
 
-namespace Impl_
-{
-  static constexpr ::BSTR const bstrEmpty = (::BSTR)NULL;
-}
-
 COM_DECLARE_INTERFACE(IApplication,
   "452AC71A-B655-4967-A208-A4CC39DD7949",
   0x452AC71A,0xB655,0x4967,0xA2,0x08,0xA4,0xCC,0x39,0xDD,0x79,0x49)
@@ -313,7 +308,7 @@ COM_DECLARE_INTERFACE(IApplication,
     /* [in, optional, defaultvalue(0)] */ ::VARIANT_BOOL force = 0);
   COM_DECLARE_METHOD(NavigateTo, 0x6002000b,
     /* [in] */ ::BSTR bstrHierarchyObjectID,
-    /* [in, optional, defaultvalue("")] */ ::BSTR bstrObjectID = Impl_::bstrEmpty,
+    /* [in, optional, defaultvalue("")] */ ::BSTR bstrObjectID = NULL,
     /* [in, optional, defaultvalue(0)] */ ::VARIANT_BOOL fNewWindow = 0);
   COM_DECLARE_METHOD(NavigateToUrl, 0x6002000c,
     /* [in] */ ::BSTR bstrUrl,
@@ -322,7 +317,7 @@ COM_DECLARE_INTERFACE(IApplication,
     /* [in] */ ::BSTR bstrHierarchyID,
     /* [in] */ ::BSTR bstrTargetFilePath,
     /* [in, optional, defaultvalue(0)] */ PublishFormat pfPublishFormat = pfOneNote,
-    /* [in, optional, defaultvalue("")] */ ::BSTR bstrCLSIDofExporter = Impl_::bstrEmpty);
+    /* [in, optional, defaultvalue("")] */ ::BSTR bstrCLSIDofExporter = NULL);
   COM_DECLARE_METHOD(OpenPackage, 0x6002000e,
     /* [in] */ ::BSTR bstrPathPackage,
     /* [in] */ ::BSTR bstrPathDest,
@@ -408,7 +403,7 @@ COM_DECLARE_INTERFACE(IWindow,
     /* [out, retval] */ ::BSTR *pbstrNotebookObjectId);
   COM_DECLARE_METHOD(NavigateTo, 0x00000009,
     /* [in] */ ::BSTR bstrHierarchyObjectID,
-    /* [in, optional, defaultvalue("")] */ ::BSTR bstrObjectID = Impl_::bstrEmpty);
+    /* [in, optional, defaultvalue("")] */ ::BSTR bstrObjectID = NULL);
   COM_DECLARE_METHOD(get_FullPageView, 0x0000000a,
     /* [out, retval] */ ::VARIANT_BOOL *pIsFullPageView);
   COM_DECLARE_METHOD(put_FullPageView, 0x0000000a,

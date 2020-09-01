@@ -103,18 +103,6 @@ COM_DECLARE_INTERFACE(IOneNoteAddIn,
     /* [out, retval] */ ::VARIANT_BOOL *pfEnabled);
 } IOneNoteAddIn;
 
-namespace Impl_
-{
-  struct BStr0Data
-  {
-    ::DWORD length;
-    ::WCHAR item0;
-    ::WCHAR terminator;
-  };
-  static constexpr BStr0Data const bstr0data = { 2, 48, 0 };
-  static constexpr ::BSTR const bstr0 = (::BSTR)&bstr0data.item0;
-}
-
 COM_DECLARE_INTERFACE(IApplication,
   "2DA16203-3F58-404F-839D-E4CDE7DD0DED",
   0x2DA16203,0x3F58,0x404F,0x83,0x9D,0xE4,0xCD,0xE7,0xDD,0x0D,0xED)
@@ -159,13 +147,13 @@ COM_DECLARE_INTERFACE(IApplication,
     /* [in, optional, defaultvalue(12:00:00 AM)] */ ::DATE dateExpectedLastModified = 0);
   COM_DECLARE_METHOD(NavigateTo, 0x6002000b,
     /* [in] */ ::BSTR bstrHierarchyObjectID,
-    /* [in, optional, defaultvalue("0")] */ ::BSTR bstrObjectID = Impl_::bstr0,
+    /* [in, optional, defaultvalue("0")] */ ::BSTR bstrObjectID,
     /* [in, optional, defaultvalue(0)] */ ::VARIANT_BOOL fNewWindow = 0);
   COM_DECLARE_METHOD(Publish, 0x6002000c,
     /* [in] */ ::BSTR bstrHierarchyID,
     /* [in] */ ::BSTR bstrTargetFilePath,
-    /* [in, optional, defaultvalue(0)] */ PublishFormat pfPublishFormat = pfOneNote,
-    /* [in, optional, defaultvalue("0")] */ ::BSTR bstrCLSIDofExporter = Impl_::bstr0);
+    /* [in, optional, defaultvalue(0)] */ PublishFormat pfPublishFormat,
+    /* [in, optional, defaultvalue("0")] */ ::BSTR bstrCLSIDofExporter);
   COM_DECLARE_METHOD(OpenPackage, 0x6002000d,
     /* [in] */ ::BSTR bstrPathPackage,
     /* [in] */ ::BSTR bstrPathDest,
@@ -188,6 +176,34 @@ COM_DECLARE_INTERFACE(IApplication,
   COM_DECLARE_METHOD(GetSpecialLocation, 0x60020011,
     /* [in] */ SpecialLocation slToGet,
     /* [out] */ ::BSTR *pbstrSpecialLocationPath);
+
+  /*** Handle default arguments. ***/
+  COM_DEFINE_EXT_METHOD(NavigateTo,
+    /* [in] */ ::BSTR bstrHierarchyObjectID)
+  {
+    ::BSTR bstr0;
+    if (!(bstr0 = ::SysAllocString(L"0")))
+    {
+      return 0x8007000E /* E_OUTOFMEMORY */;
+    }
+    ::HRESULT hr = NavigateTo(bstrHierarchyObjectID, bstr0, 0);
+    ::SysFreeString(bstr0);
+    return hr;
+  }
+  COM_DEFINE_EXT_METHOD(Publish,
+    /* [in] */ ::BSTR bstrHierarchyID,
+    /* [in] */ ::BSTR bstrTargetFilePath,
+    /* [in, optional, defaultvalue(0)] */ PublishFormat pfPublishFormat = pfOneNote)
+  {
+    ::BSTR bstr0;
+    if (!(bstr0 = ::SysAllocString(L"0")))
+    {
+      return 0x8007000E /* E_OUTOFMEMORY */;
+    }
+    ::HRESULT hr = Publish(bstrHierarchyID, bstrTargetFilePath, pfPublishFormat, bstr0);
+    ::SysFreeString(bstr0);
+    return hr;
+  }
 } IApplication;
 
 COM_DECLARE_CLASS(Application, IApplication,

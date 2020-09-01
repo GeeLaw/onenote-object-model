@@ -38,6 +38,9 @@
   COM_DECLARE_DISP_METHOD(name, dispid); \
   public: virtual ::HRESULT __stdcall name(__VA_ARGS__) = 0
 
+#define COM_DEFINE_EXT_METHOD(name, ...) \
+  public: inline ::HRESULT name(__VA_ARGS__)
+
 #define COM_DECLARE_DISP_METHOD(name, dispid, ...) \
   public: static constexpr ::DISPID const DISPID_##name = dispid
 
