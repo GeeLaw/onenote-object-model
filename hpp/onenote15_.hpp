@@ -264,39 +264,39 @@ COM_DECLARE_INTERFACE(IApplication,
     /* [in] */ ::BSTR bstrStartNodeID,
     /* [in] */ HierarchyScope hsScope,
     /* [out] */ ::BSTR *pbstrHierarchyXmlOut,
-    /* [in, optional, defaultvalue(2)] */ XMLSchema xsSchema = xsCurrent);
+    /* [in, optional, defaultvalue(2)] */ XMLSchema xsSchema);
   COM_DECLARE_METHOD(UpdateHierarchy, 0x60020001,
     /* [in] */ ::BSTR bstrChangesXmlIn,
-    /* [in, optional, defaultvalue(2)] */ XMLSchema xsSchema = xsCurrent);
+    /* [in, optional, defaultvalue(2)] */ XMLSchema xsSchema);
   COM_DECLARE_METHOD(OpenHierarchy, 0x60020002,
     /* [in] */ ::BSTR bstrPath,
     /* [in] */ ::BSTR bstrRelativeToObjectID,
     /* [out] */ ::BSTR *pbstrObjectID,
-    /* [in, optional, defaultvalue(0)] */ CreateFileType cftIfNotExist = cftNone);
+    /* [in, optional, defaultvalue(0)] */ CreateFileType cftIfNotExist);
   COM_DECLARE_METHOD(DeleteHierarchy, 0x60020003,
     /* [in] */ ::BSTR bstrObjectID,
-    /* [in, optional, defaultvalue(12:00:00 AM)] */ ::DATE dateExpectedLastModified = 0,
-    /* [in, optional, defaultvalue(0)] */ ::VARIANT_BOOL deletePermanently = 0);
+    /* [in, optional, defaultvalue(12:00:00 AM)] */ ::DATE dateExpectedLastModified,
+    /* [in, optional, defaultvalue(0)] */ ::VARIANT_BOOL deletePermanently);
   COM_DECLARE_METHOD(CreateNewPage, 0x60020004,
     /* [in] */ ::BSTR bstrSectionID,
     /* [out] */ ::BSTR *pbstrPageID,
-    /* [in, optional, defaultvalue(0)] */ NewPageStyle npsNewPageStyle = npsDefault);
+    /* [in, optional, defaultvalue(0)] */ NewPageStyle npsNewPageStyle);
   COM_DECLARE_METHOD(CloseNotebook, 0x60020005,
     /* [in] */ ::BSTR bstrNotebookID,
-    /* [in, optional, defaultvalue(0)] */ ::VARIANT_BOOL force = 0);
+    /* [in, optional, defaultvalue(0)] */ ::VARIANT_BOOL force);
   COM_DECLARE_METHOD(GetHierarchyParent, 0x60020006,
     /* [in] */ ::BSTR bstrObjectID,
     /* [out] */ ::BSTR *pbstrParentID);
   COM_DECLARE_METHOD(GetPageContent, 0x60020007,
     /* [in] */ ::BSTR bstrPageID,
     /* [out] */ ::BSTR *pbstrPageXmlOut,
-    /* [in, optional, defaultvalue(0)] */ PageInfo pageInfoToExport = piBasic,
-    /* [in, optional, defaultvalue(2)] */ XMLSchema xsSchema = xsCurrent);
+    /* [in, optional, defaultvalue(0)] */ PageInfo pageInfoToExport,
+    /* [in, optional, defaultvalue(2)] */ XMLSchema xsSchema);
   COM_DECLARE_METHOD(UpdatePageContent, 0x60020008,
     /* [in] */ ::BSTR bstrPageChangesXmlIn,
-    /* [in, optional, defaultvalue(12:00:00 AM)] */ ::DATE dateExpectedLastModified = 0,
-    /* [in, optional, defaultvalue(2)] */ XMLSchema xsSchema = xsCurrent,
-    /* [in, optional, defaultvalue(0)] */ ::VARIANT_BOOL force = 0);
+    /* [in, optional, defaultvalue(12:00:00 AM)] */ ::DATE dateExpectedLastModified,
+    /* [in, optional, defaultvalue(2)] */ XMLSchema xsSchema,
+    /* [in, optional, defaultvalue(0)] */ ::VARIANT_BOOL force);
   COM_DECLARE_METHOD(GetBinaryPageContent, 0x60020009,
     /* [in] */ ::BSTR bstrPageID,
     /* [in] */ ::BSTR bstrCallbackID,
@@ -304,20 +304,20 @@ COM_DECLARE_INTERFACE(IApplication,
   COM_DECLARE_METHOD(DeletePageContent, 0x6002000a,
     /* [in] */ ::BSTR bstrPageID,
     /* [in] */ ::BSTR bstrObjectID,
-    /* [in, optional, defaultvalue(12:00:00 AM)] */ ::DATE dateExpectedLastModified = 0,
-    /* [in, optional, defaultvalue(0)] */ ::VARIANT_BOOL force = 0);
+    /* [in, optional, defaultvalue(12:00:00 AM)] */ ::DATE dateExpectedLastModified,
+    /* [in, optional, defaultvalue(0)] */ ::VARIANT_BOOL force);
   COM_DECLARE_METHOD(NavigateTo, 0x6002000b,
     /* [in] */ ::BSTR bstrHierarchyObjectID,
-    /* [in, optional, defaultvalue("")] */ ::BSTR bstrObjectID = NULL,
-    /* [in, optional, defaultvalue(0)] */ ::VARIANT_BOOL fNewWindow = 0);
+    /* [in, optional, defaultvalue("")] */ ::BSTR bstrObjectID,
+    /* [in, optional, defaultvalue(0)] */ ::VARIANT_BOOL fNewWindow);
   COM_DECLARE_METHOD(NavigateToUrl, 0x6002000c,
     /* [in] */ ::BSTR bstrUrl,
-    /* [in, optional, defaultvalue(0)] */ ::VARIANT_BOOL fNewWindow = 0);
+    /* [in, optional, defaultvalue(0)] */ ::VARIANT_BOOL fNewWindow);
   COM_DECLARE_METHOD(Publish, 0x6002000d,
     /* [in] */ ::BSTR bstrHierarchyID,
     /* [in] */ ::BSTR bstrTargetFilePath,
-    /* [in, optional, defaultvalue(0)] */ PublishFormat pfPublishFormat = pfOneNote,
-    /* [in, optional, defaultvalue("")] */ ::BSTR bstrCLSIDofExporter = NULL);
+    /* [in, optional, defaultvalue(0)] */ PublishFormat pfPublishFormat,
+    /* [in, optional, defaultvalue("")] */ ::BSTR bstrCLSIDofExporter);
   COM_DECLARE_METHOD(OpenPackage, 0x6002000e,
     /* [in] */ ::BSTR bstrPathPackage,
     /* [in] */ ::BSTR bstrPathDest,
@@ -330,15 +330,15 @@ COM_DECLARE_INTERFACE(IApplication,
     /* [in] */ ::BSTR bstrStartNodeID,
     /* [in] */ ::BSTR bstrSearchString,
     /* [out] */ ::BSTR *pbstrHierarchyXmlOut,
-    /* [in, optional, defaultvalue(0)] */ ::VARIANT_BOOL fIncludeUnindexedPages = 0,
-    /* [in, optional, defaultvalue(0)] */ ::VARIANT_BOOL fDisplay = 0,
-    /* [in, optional, defaultvalue(2)] */ XMLSchema xsSchema = xsCurrent);
+    /* [in, optional, defaultvalue(0)] */ ::VARIANT_BOOL fIncludeUnindexedPages,
+    /* [in, optional, defaultvalue(0)] */ ::VARIANT_BOOL fDisplay,
+    /* [in, optional, defaultvalue(2)] */ XMLSchema xsSchema);
   COM_DECLARE_METHOD(FindMeta, 0x60020011,
     /* [in] */ ::BSTR bstrStartNodeID,
     /* [in] */ ::BSTR bstrSearchStringName,
     /* [out] */ ::BSTR *pbstrHierarchyXmlOut,
-    /* [in, optional, defaultvalue(0)] */ ::VARIANT_BOOL fIncludeUnindexedPages = 0,
-    /* [in, optional, defaultvalue(2)] */ XMLSchema xsSchema = xsCurrent);
+    /* [in, optional, defaultvalue(0)] */ ::VARIANT_BOOL fIncludeUnindexedPages,
+    /* [in, optional, defaultvalue(2)] */ XMLSchema xsSchema);
   COM_DECLARE_METHOD(GetSpecialLocation, 0x60020012,
     /* [in] */ SpecialLocation slToGet,
     /* [out] */ ::BSTR *pbstrSpecialLocationPath);
@@ -403,7 +403,7 @@ COM_DECLARE_INTERFACE(IWindow,
     /* [out, retval] */ ::BSTR *pbstrNotebookObjectId);
   COM_DECLARE_METHOD(NavigateTo, 0x00000009,
     /* [in] */ ::BSTR bstrHierarchyObjectID,
-    /* [in, optional, defaultvalue("")] */ ::BSTR bstrObjectID = NULL);
+    /* [in, optional, defaultvalue("")] */ ::BSTR bstrObjectID);
   COM_DECLARE_METHOD(get_FullPageView, 0x0000000a,
     /* [out, retval] */ ::VARIANT_BOOL *pIsFullPageView);
   COM_DECLARE_METHOD(put_FullPageView, 0x0000000a,
