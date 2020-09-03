@@ -1,6 +1,6 @@
 # OneNote events &mdash; very buggy!
 
-This document applies to OneNote 16.0.13127.20266 64-bit for Windows.
+This document applies to OneNote 16.0.13127.20266 64-bit for Windows, and only for out-of-process event sinks. However, I highly doubt whether OneNote events ever worked at any time in the history.
 
 ## Problem 1: `IConnectionPoint.Advise` fails with `E_FAIL`
 

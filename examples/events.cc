@@ -85,93 +85,26 @@ struct MyEvents : public IOneNoteEvents
     WORD wFlags, DISPPARAMS *pDispParams, VARIANT *pVarResult,
     EXCEPINFO *pExcepInfo, UINT *puArgErr)
   {
-    wprintf(L"Invoke()\n");
+    wprintf(L"Invoke(DispId = %d)\n", (int)dispIdMember);
     if (pVarResult)
     {
       VariantInit(pVarResult);
     }
-    EXCEPINFO helper1 = {};
     if (pExcepInfo)
     {
       memset(pExcepInfo, sizeof(EXCEPINFO), 0);
     }
-    else
-    {
-      pExcepInfo = &helper1;
-    }
-    UINT helper2 = 0;
-    puArgErr = (puArgErr ? puArgErr : &helper2);
-    if (riid != IID_NULL)
-    {
-      return E_INVALIDARG;
-    }
-    if (wFlags != DISPATCH_METHOD)
-    {
-      return DISP_E_MEMBERNOTFOUND;
-    }
-    if (pDispParams->cNamedArgs != 0)
-    {
-      return DISP_E_NONAMEDARGS;
-    }
-    if (dispIdMember == DISPID_OnNavigate)
-    {
-      if (pDispParams->cArgs != 0)
-      {
-        return DISP_E_BADPARAMCOUNT;
-      }
-      HRESULT hr = OnNavigate();
-      if (!SUCCEEDED(hr))
-      {
-        pExcepInfo->scode = hr;
-        return DISP_E_EXCEPTION;
-      }
-      return S_OK;
-    }
-    if (dispIdMember == DISPID_OnHierarchyChange)
-    {
-      if (pDispParams->cArgs != 1)
-      {
-        return DISP_E_BADPARAMCOUNT;
-      }
-      /* Being lazy here... */
-      return S_OK;
-    }
-    return DISP_E_MEMBERNOTFOUND;
+    return S_OK;
   }
   /*** IOneNoteEvents ***/
   STDMETHODIMP OnNavigate()
   {
     wprintf(L"OnNavigate()\n");
-    HRESULT hr;
-    ComPtr<IWindows> windows;
-    if (!SUCCEEDED(hr = app->get_Windows(windows.ppiOut())))
-    {
-      wprintf(L"get_Windows returned %08x.\n", (int)hr);
-      return hr;
-    }
-    ComPtr<IWindow> current;
-    if (!SUCCEEDED(hr = windows->get_CurrentWindow(current.ppiOut())))
-    {
-      wprintf(L"get_CurrentWindow returned %08x.\n", (int)hr);
-      return hr;
-    }
-    if (!current)
-    {
-      wprintf(L"There is no current window.\n");
-      return S_OK;
-    }
-    BSTR page;
-    if (!SUCCEEDED(hr = current->get_CurrentPageId(&page)))
-    {
-      wprintf(L"get_CurrentPageId returned %08x.\n", (int)hr);
-      return hr;
-    }
-    BStrSysFreeString freePage(page);
-    wprintf(L"--- %ls ---\n", SysStringLen(page) == 0 ? L"<none>" : page);
     return S_OK;
   }
   STDMETHODIMP OnHierarchyChange(BSTR bstrActivePageID)
   {
+    wprintf(L"OnHierarchyChange()\n");
     return S_OK;
   }
   /*** C++ ***/
