@@ -8,8 +8,6 @@ COM_DECLARE_ENUM(HtmlStatus, "4C5A2A84-A20C-4CFE-8A54-0C5D3BF3CA2C")
   hsHtmlPasswordField = 0x80042055
 } HtmlStatus;
 
-typedef uint64_t uint64;
-
 COM_DECLARE_INTERFACE(IApplicationEx,
   "8BF94B48-1E76-4AA3-AB1D-463F49B3E681",
   0x8BF94B48,0x1E76,0x4AA3,0xAB,0x1D,0x46,0x3F,0x49,0xB3,0xE6,0x81)
@@ -27,5 +25,5 @@ COM_DECLARE_INTERFACE(IApplicationEx,
     /* [in] */ ::BSTR bstrTitle,
     /* [in] */ ::BSTR bstrHtml,
     /* [in] */ ::VARIANT_BOOL fRtl,
-    /* [in] */ uint64 hwndParent);
+    /* [in] */ ::UINT64 hwndParent);
 } IApplicationEx;

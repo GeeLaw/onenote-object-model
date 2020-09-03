@@ -172,14 +172,6 @@ namespace Error
   COM_DECLARE_HRESULT(AppInModalUI, 0x80042030);
 }
 
-typedef struct Point
-{
-  long x;
-  long y;
-} Point;
-
-typedef uint64_t uint64;
-
 COM_FWD_DECLARE_INTERFACE(IQuickFilingDialog);
 COM_FWD_DECLARE_INTERFACE(IQuickFilingDialogCallback);
 COM_FWD_DECLARE_INTERFACE(IApplication);
@@ -208,19 +200,19 @@ COM_DECLARE_INTERFACE(IQuickFilingDialog,
   COM_DECLARE_METHOD(put_CheckboxState, 0x00000003,
     /* [in] */ ::VARIANT_BOOL pfChecked);
   COM_DECLARE_METHOD(get_WindowHandle, 0x00000004,
-    /* [out, retval] */ uint64 *pHWNDWindow);
+    /* [out, retval] */ ::UINT64 *pHWNDWindow);
   COM_DECLARE_METHOD(get_TreeDepth, 0x00000005,
     /* [out, retval] */ HierarchyElement *pTreeDepth);
   COM_DECLARE_METHOD(put_TreeDepth, 0x00000005,
     /* [in] */ HierarchyElement pTreeDepth);
   COM_DECLARE_METHOD(get_ParentWindowHandle, 0x00000006,
-    /* [out, retval] */ uint64 *pHWNDParentWindow);
+    /* [out, retval] */ ::UINT64 *pHWNDParentWindow);
   COM_DECLARE_METHOD(put_ParentWindowHandle, 0x00000006,
-    /* [in] */ uint64 pHWNDParentWindow);
+    /* [in] */ ::UINT64 pHWNDParentWindow);
   COM_DECLARE_METHOD(get_Position, 0x00000007,
-    /* [out, retval] */ Point *pPoint);
+    /* [out, retval] */ ::POINT *pPoint);
   COM_DECLARE_METHOD(put_Position, 0x00000007,
-    /* [in] */ Point pPoint);
+    /* [in] */ ::POINT pPoint);
   COM_DECLARE_METHOD(SetRecentResults, 0x00000008,
     /* [in] */ RecentResultType recentResults,
     /* [in] */ ::VARIANT_BOOL fShowCurrentSection,
@@ -363,9 +355,9 @@ COM_DECLARE_INTERFACE(IApplication,
     /* [in] */ ::BSTR bstrSectionSourceId,
     /* [in] */ ::BSTR bstrSectionDestinationId);
   COM_DECLARE_METHOD(get_COMAddIns, 0x00000068,
-    /* [out, retval] */ IDispatch **ppiComAddins);
+    /* [out, retval] */ ::IDispatch **ppiComAddins);
   COM_DECLARE_METHOD(get_LanguageSettings, 0x00000069,
-    /* [out, retval] */ IDispatch **ppiLanguageSettings);
+    /* [out, retval] */ ::IDispatch **ppiLanguageSettings);
   COM_DECLARE_METHOD(GetWebHyperlinkToObject, 0x6002001c,
     /* [in] */ ::BSTR bstrHierarchyID,
     /* [in] */ ::BSTR bstrPageContentObjectID,
@@ -382,7 +374,7 @@ COM_DECLARE_INTERFACE(IWindows,
   COM_DECLARE_METHOD(get_Count, 0x00000001,
     /* [out, retval] */ unsigned long *Count);
   COM_DECLARE_METHOD(get__NewEnum, 0xfffffffc,
-    /* [out, retval] */ IUnknown **_NewEnum);
+    /* [out, retval] */ ::IUnknown **_NewEnum);
   COM_DECLARE_METHOD(get_CurrentWindow, 0x00000003,
     /* [out, retval] */ IWindow **ppCurrentWindow);
 } Windows;
@@ -392,7 +384,7 @@ COM_DECLARE_INTERFACE(IWindow,
   0x8E8304B8,0xCBD1,0x44F8,0xB0,0xE8,0x89,0xC6,0x25,0xB2,0x00,0x2E)
 {
   COM_DECLARE_METHOD(get_WindowHandle, 0,
-    /* [out, retval] */ uint64 *pHWNDWindow);
+    /* [out, retval] */ ::UINT64 *pHWNDWindow);
   COM_DECLARE_METHOD(get_CurrentPageId, 0x00000001,
     /* [out, retval] */ ::BSTR *pbstrPageObjectId);
   COM_DECLARE_METHOD(get_CurrentSectionId, 0x00000002,
@@ -424,21 +416,21 @@ COM_DECLARE_INTERFACE(IWindow,
     /* [in] */ ::BSTR bstrUrl);
   COM_DECLARE_METHOD(SetDockedLocation, 0x00000011,
     /* [in] */ DockLocation DockLocation,
-    /* [in] */ Point ptMonitor);
+    /* [in] */ ::POINT ptMonitor);
 } Window;
 
-COM_DECLARE_DISP_INTERFACE(IOneNoteEvents,
+COM_DECLARE_INTERFACE(IOneNoteEvents,
   "E2E1511D-502D-4BD0-8B3A-8A89A05CDCAE",
   0xE2E1511D,0x502D,0x4BD0,0x8B,0x3A,0x8A,0x89,0xA0,0x5C,0xDC,0xAE)
 {
   /* These two methods return void, not HRESULT. */
-  COM_DECLARE_DISP_METHOD(OnNavigate, 0x00000001);
-  COM_DECLARE_DISP_METHOD(OnHierarchyChange, 0x00000002,
-    /* [in] */ BSTR bstrActivePageID);
+  COM_DECLARE_METHOD(OnNavigate, 0x00000001);
+  COM_DECLARE_METHOD(OnHierarchyChange, 0x00000002,
+    /* [in] */ ::BSTR bstrActivePageID);
 } IOneNoteEvents;
 
-COM_DECLARE_CLASS(Application, IApplication,
-  0xD7FAC39E,0x7FF1,0x49AA,0x98,0xCF,0xA1,0xDD,0xD3,0x16,0x33,0x7E)
+COM_DECLARE_CLASS(Application, IApplication, IID_IApplication,
+  0xD7FAC39E,0x7FF1,0x49AA,0x98,0xCF,0xA1,0xDD,0xD3,0x16,0x33,0x7E);
 
-COM_DECLARE_CLASS(Application2, IApplication,
-  0xDC67E480,0xC3CB,0x49F8,0x82,0x32,0x60,0xB0,0xC2,0x05,0x6C,0x8E)
+COM_DECLARE_CLASS(Application2, IApplication, IID_IApplication,
+  0xDC67E480,0xC3CB,0x49F8,0x82,0x32,0x60,0xB0,0xC2,0x05,0x6C,0x8E);

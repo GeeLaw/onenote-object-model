@@ -206,5 +206,5 @@ COM_DECLARE_INTERFACE(IApplication,
   }
 } IApplication;
 
-COM_DECLARE_CLASS(Application, IApplication,
+COM_DECLARE_CLASS(Application, IApplication, IID_IApplication,
   0x0039FFEC,0xA022,0x4232,0x82,0x74,0x6B,0x34,0x78,0x7B,0xFC,0x27)
